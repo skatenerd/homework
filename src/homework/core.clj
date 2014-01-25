@@ -6,11 +6,13 @@
       (if tree
         (first (map #(find-node predicate %) (:children tree))))))
 
-(defn find-node-custom [predicate get-children graph]
+(defn find-node-custom [predicate get-children tree]
   ;you will probably say something like:
-  ;(let [children (get-children graph)])
+  ;(let [children (get-children tree)])
   [])
 
+
+(defn find-node-with-path [path-predicate get-children tree])
 ;CONTRACT
 ;if it's in the subree
   ;return it

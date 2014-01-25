@@ -44,7 +44,7 @@
 ;note: 'rest' is a function!
 (describe "DFS with Custom child-finder"
   (with tree [2
-               [7 2]
+               [7 [2]]
                [9
                 [4 [11] [19]]]
                [22
@@ -54,3 +54,22 @@
     (should=
       [5 [81]]
       (find-node-custom #(= (first %) 5) rest @tree))))
+
+(describe "BONUS ROUND:  can make assertions on the path it took to get to a node"
+  (with tree [1
+               [9 2]
+               [5]
+               [2
+                [82 [17]]
+                [3
+                 [11 [99]]
+                 [4 [101 78]
+                  [5 [9000]]]]]
+               [77 [11 [5]]]])
+  (it "finds the [5] which is found via a path of 1-2-3-4-5"
+    (should=
+      [5 [9000]]
+      (find-node-with-path
+        #(= [1 2 3 4 5] (map first %))
+        rest
+        @tree))))
