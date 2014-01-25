@@ -12,13 +12,12 @@
   [])
 
 
-(defn find-node-with-path [path-predicate get-children tree])
+(defn find-node-with-path [path-so-far path-predicate get-children tree])
 ;CONTRACT
 ;if it's in the subree
   ;return it
 ;if it's not in the subtee
   ;return nil
-
 
 ;IDEA:
 ; if predicate tree
