@@ -6,6 +6,9 @@
       (if tree
         (first (map #(find-node predicate %) (:children tree))))))
 
+(defn find-all [predicate tree]
+  #{})
+
 (defn find-node-custom [predicate get-children tree]
   ;you will probably say something like:
   ;(let [children (get-children tree)])
