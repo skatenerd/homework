@@ -74,3 +74,20 @@
         #(= [1 2 3 4 5] (map first %))
         rest
         @tree))))
+
+(describe "find ALL the finds!"
+  (with tree {:contents "GRANDMA SALLY"
+              :children [{:contents "PARENT JOEY"
+                          :children [{:contents "GRANDCHILD DYLAN" :children []}]}
+                         {:contents "PARENT JOANNE"
+                          :children [{:contents "GRANDCHILD LOGAN" :children []}
+                                     {:contents "GRANDCHILD KATIE" :children []}]}]})
+  (it "Finds all the grandchildren"
+    (should=
+      #{{:contents "GRANDCHILD DYLAN" :children []}
+        {:contents "GRANDCHILD LOGAN" :children []}
+        {:contents "GRANDCHILD KATIE" :children []}}
+      (find-all
+        #(.startsWith (:contents %) "GRANDCHILD")
+        @tree)))
+  )
