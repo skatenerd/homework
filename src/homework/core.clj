@@ -1,9 +1,9 @@
 (ns homework.core)
 
+(declare find-node-custom)
+
 (defn find-node [predicate tree]
-  (if (predicate tree)
-    tree
-    (first (filter #(find-node predicate %) (:children tree)))))
+  (find-node-custom predicate #(:children %) tree))
 
 (defn find-all [predicate get-children tree]
   (let [new-finds (if (predicate tree)
