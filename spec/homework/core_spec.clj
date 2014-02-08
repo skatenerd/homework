@@ -70,8 +70,8 @@
     (should=
       [5 [9000]]
       (find-node-with-path
-        []
-        #(= [1 2 3 4 5] (map first %))
+        [1 2 3 4 5]
+        first
         rest
         @tree))))
 
