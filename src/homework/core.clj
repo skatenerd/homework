@@ -39,3 +39,6 @@
 
 (defn find-all-nodes-with-path [target-content-sequence get-contents get-children tree]
   (map :node (find-with-path target-content-sequence get-contents get-children tree find-all)))
+
+;(defn find-xml [document node-sequence]
+;  (find-all-nodes-with-path node-sequence first rest document))
