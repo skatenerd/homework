@@ -55,6 +55,24 @@
       [5 [81]]
       (find-node-custom #(= (first %) 5) rest @tree))))
 
+(describe "find ALL the finds!"
+  (with tree {:contents "GRANDMA SALLY"
+              :children [{:contents "PARENT JOEY"
+                          :children [{:contents "GRANDCHILD DYLAN" :children []}]}
+                         {:contents "PARENT JOANNE"
+                          :children [{:contents "GRANDCHILD LOGAN" :children []}
+                                     {:contents "GRANDCHILD KATIE" :children []}]}]})
+  (it "Finds all the grandchildren"
+    (should=
+      #{{:contents "GRANDCHILD DYLAN" :children []}
+        {:contents "GRANDCHILD LOGAN" :children []}
+        {:contents "GRANDCHILD KATIE" :children []}}
+      (find-all
+        #(.startsWith (:contents %) "GRANDCHILD")
+        :children
+        @tree)))
+  )
+
 (describe "BONUS ROUND:  can make assertions on the path it took to get to a node"
   (with tree [1
                [9 [2]]
@@ -74,21 +92,3 @@
         first
         rest
         @tree))))
-
-(describe "find ALL the finds!"
-  (with tree {:contents "GRANDMA SALLY"
-              :children [{:contents "PARENT JOEY"
-                          :children [{:contents "GRANDCHILD DYLAN" :children []}]}
-                         {:contents "PARENT JOANNE"
-                          :children [{:contents "GRANDCHILD LOGAN" :children []}
-                                     {:contents "GRANDCHILD KATIE" :children []}]}]})
-  (it "Finds all the grandchildren"
-    (should=
-      #{{:contents "GRANDCHILD DYLAN" :children []}
-        {:contents "GRANDCHILD LOGAN" :children []}
-        {:contents "GRANDCHILD KATIE" :children []}}
-      (find-all
-        #(.startsWith (:contents %) "GRANDCHILD")
-        :children
-        @tree)))
-  )
