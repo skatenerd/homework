@@ -89,5 +89,6 @@
         {:contents "GRANDCHILD KATIE" :children []}}
       (find-all
         #(.startsWith (:contents %) "GRANDCHILD")
+        :children
         @tree)))
   )
