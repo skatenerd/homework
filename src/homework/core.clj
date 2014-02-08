@@ -24,7 +24,7 @@
 (defn- subsequence? [shorter longer]
   (= (take (count shorter) longer) shorter))
 
-(defn find-node-with-path [target-content-sequence get-contents get-children tree]
+(defn find-with-path [target-content-sequence get-contents get-children tree traversal-algorithm]
   (let [get-children-metagraph (fn [node]
                                  (vec (filter
                                         #(subsequence? (:path %) target-content-sequence)
@@ -32,6 +32,10 @@
                                           (fn [child] {:node child :path (conj (vec (:path node)) (get-contents child))})
                                           (get-children (:node node))))))
         metagraph-predicate #(= target-content-sequence (:path %))]
-    (:node (find-node-custom metagraph-predicate get-children-metagraph {:node tree :path [(get-contents tree)]}))))
+    (traversal-algorithm metagraph-predicate get-children-metagraph {:node tree :path [(get-contents tree)]})))
 
-(defn find-all-nodes-with-path [target-content-sequence get-contents get-children tree])
+(defn find-node-with-path [target-content-sequence get-contents get-children tree]
+  (:node (find-with-path target-content-sequence get-contents get-children tree find-node-custom)))
+
+(defn find-all-nodes-with-path [target-content-sequence get-contents get-children tree]
+  (map :node (find-with-path target-content-sequence get-contents get-children tree find-all)))
