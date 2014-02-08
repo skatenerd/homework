@@ -16,3 +16,4 @@
 
 
 (defn find-node-with-path [target-content-sequence get-contents get-children tree])
+(defn find-all-nodes-with-path [target-content-sequence get-contents get-children tree])

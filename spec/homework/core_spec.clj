@@ -91,4 +91,13 @@
         [1 2 3 4 5]
         first
         rest
+        @tree)))
+
+  (it "finds every node which is found via a path of 1-2-3-4-5"
+    (should=
+      '([5 [9000]])
+      (find-all-nodes-with-path
+        [1 2 3 4 5]
+        first
+        rest
         @tree))))
