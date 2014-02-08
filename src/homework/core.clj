@@ -12,7 +12,7 @@
     (reduce
       clojure.set/union
       new-finds
-      (map #(find-all predicate %) (get-children tree)))))
+      (map #(find-all predicate get-children %) (get-children tree)))))
 
 (defn find-node-custom [predicate get-children tree]
   (if (predicate tree)
@@ -21,6 +21,17 @@
       #(find-node-custom predicate get-children %)
       (get-children tree))))
 
+(defn- subsequence? [shorter longer]
+  (= (take (count shorter) longer) shorter))
 
-(defn find-node-with-path [target-content-sequence get-contents get-children tree])
+(defn find-node-with-path [target-content-sequence get-contents get-children tree]
+  (let [get-children-metagraph (fn [node]
+                                 (vec (filter
+                                        #(subsequence? (:path %) target-content-sequence)
+                                        (map
+                                          (fn [child] {:node child :path (conj (vec (:path node)) (get-contents child))})
+                                          (get-children (:node node))))))
+        metagraph-predicate #(= target-content-sequence (:path %))]
+    (:node (find-node-custom metagraph-predicate get-children-metagraph {:node tree :path [(get-contents tree)]}))))
+
 (defn find-all-nodes-with-path [target-content-sequence get-contents get-children tree])
